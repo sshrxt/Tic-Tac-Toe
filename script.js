@@ -70,6 +70,7 @@ function Gameboard() {
     return null;
   };
 
+
   return {
     getBoard,
     markSpot,
@@ -101,6 +102,10 @@ function gameController(playerName1, playerName2) {
 
   let currPlayer = player1;
 
+  const getBoard = () => {
+    return board.getBoard();
+  };
+
   const switchPlayer = () => {
     if(currPlayer === player1) {
         currPlayer = player2;
@@ -127,11 +132,13 @@ function gameController(playerName1, playerName2) {
     }
     switchPlayer();
     printNewRound();
+    board.displayBoard();
   }
 
   printNewRound();
 
   return { 
+    getBoard,
     playRound
   };
 }
@@ -145,4 +152,20 @@ function playerCreater(name, tokenValue, playerValue) {
 
 (function game() {
     const game = gameController('Player1', 'Player2');
+    const board = game.getBoard();
+
+    console.log(board);
+
+    const boardDiv = document.createElement("div");
+    boardDiv.classList.add("board");
+    const body = document.querySelector("body");
+
+    board.map((row) => {
+        row.map((cell) => {
+            const cellDiv = document.createElement("div");
+            cellDiv.textContent = cell.getValue();
+            boardDiv.appendChild(cellDiv);
+        });
+    });
+    body.appendChild(boardDiv);
 })();

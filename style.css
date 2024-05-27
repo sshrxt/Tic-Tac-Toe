@@ -65,9 +65,13 @@ body{
     font-size: 4rem;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    
-    div {
-        text-align: center;
-        align-self: center;
-    }
+    grid-template-rows: 1fr 1fr 1fr;
+    text-align: center;
+}
+.cell {
+    border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 }

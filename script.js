@@ -16,6 +16,7 @@ function Gameboard() {
 
     if (board[Xpos][Ypos].getValue() === 0) {
       board[Xpos][Ypos].addToken(player);
+      console.log(player);
     } else {
       return;
     }
@@ -102,6 +103,8 @@ function gameController(playerName1, playerName2) {
 
   let currPlayer = player1;
 
+  console.log(player1);
+
   const getBoard = () => {
     return board.getBoard();
   };
@@ -129,10 +132,11 @@ function gameController(playerName1, playerName2) {
     board.markSpot(Xpos, Ypos, getCurrPlayer().tokenValue);
     if(board.checkWin() !== null) {
         console.log(`${getCurrPlayer().name} WINSSSS`);
+        alert("we have a winner");
     }
     switchPlayer();
+    updateBoard(board.getBoard());
     printNewRound();
-    board.displayBoard();
   }
 
   printNewRound();
@@ -143,8 +147,28 @@ function gameController(playerName1, playerName2) {
   };
 }
 
+function updateBoard(board) {
+  // Get the parent div
+  const parentDiv = document.querySelector(".board");
 
-function playerCreater(name, tokenValue, playerValue) {
+  // Get all child elements
+  const children = parentDiv.children;
+
+  // Optionally convert HTMLCollection to an array
+  const childrenArray = Array.from(children);
+
+  const flatBoard = board.flat();
+
+  
+  for(let i = 0; i < childrenArray.length; i++) {
+    if(flatBoard[i].getValue() !== 0) {
+      childrenArray[i].textContent = flatBoard[i].getValue();
+    }
+  }
+}
+
+
+function playerCreater(name, playerValue, tokenValue) {
    this.name = name;
    this.playerValue = playerValue;
    this.tokenValue = tokenValue;
@@ -160,12 +184,26 @@ function playerCreater(name, tokenValue, playerValue) {
     boardDiv.classList.add("board");
     const body = document.querySelector("body");
 
-    board.map((row) => {
-        row.map((cell) => {
+    board.map((row, rowIndex) => {
+        row.map((cell, cellIndex) => {
             const cellDiv = document.createElement("div");
-            cellDiv.textContent = cell.getValue();
+            cellDiv.textContent = " ";
+            cellDiv.classList.add("cell");
+            cellDiv.dataset.row = rowIndex; 
+            cellDiv.dataset.cell = cellIndex;
+            cellDiv.addEventListener("click", ()=> {
+              const currRow = event.target.dataset.row;
+              const currCell = event.target.dataset.cell;
+              game.playRound(currRow, currCell);
+            });
             boardDiv.appendChild(cellDiv);
         });
     });
     body.appendChild(boardDiv);
+
+    // game.playRound(1, 1);
+    // game.playRound(1, 0);
+    // game.playRound(0, 0);
+    // game.playRound(0, 1);
+    // game.playRound(2, 2);
 })();

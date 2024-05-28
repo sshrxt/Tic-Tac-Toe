@@ -100,10 +100,31 @@ function gameController(playerName1, playerName2) {
 
   const player1 = new playerCreater(playerName1, 1, 'X');
   const player2 = new playerCreater(playerName2, 2, 'O');
+  const playerTurnTitle = document.querySelector(".player-turn-title");
+  playerTurnTitle.textContent = `${player1.name}'s turn`;
 
   let currPlayer = player1;
 
   console.log(player1);
+
+  const changePlayerName = (whichPlayer, newName) => {
+    if(whichPlayer === "one") {
+      player1.name = newName;
+      if(getCurrPlayer() === player1){
+        updatePlayerTitle(player1);
+      }
+    }
+    else {
+      player2.name = newName;
+      if(getCurrPlayer() === player2){
+        updatePlayerTitle(player2);
+      }
+    }
+  }
+
+  const updatePlayerTitle = (player) => {
+    playerTurnTitle.textContent = `${player.name}'s turn`;
+  }
 
   const getBoard = () => {
     return board.getBoard();
@@ -131,10 +152,10 @@ function gameController(playerName1, playerName2) {
     console.log(`Writing an ${getCurrPlayer().playerValue} to the position ${Xpos}, ${Ypos} `);
     board.markSpot(Xpos, Ypos, getCurrPlayer().tokenValue);
     if(board.checkWin() !== null) {
-        console.log(`${getCurrPlayer().name} WINSSSS`);
-        alert("we have a winner");
-    }
+      console.log(`${getCurrPlayer().name} WINSSSS`);   
+    } 
     switchPlayer();
+    playerTurnTitle.textContent = `${getCurrPlayer().name}'s turn`;
     updateBoard(board.getBoard());
     printNewRound();
   }
@@ -143,7 +164,8 @@ function gameController(playerName1, playerName2) {
 
   return { 
     getBoard,
-    playRound
+    playRound, 
+    changePlayerName
   };
 }
 
@@ -174,15 +196,29 @@ function playerCreater(name, playerValue, tokenValue) {
    this.tokenValue = tokenValue;
 }
 
-(function game() {
-    const game = gameController('Player1', 'Player2');
-    const board = game.getBoard();
+function addPlayerListeners(game){
+  const playerOne = document.querySelector("#player-title-one");
+  playerOne.addEventListener("input", ()=> {
+    game.changePlayerName("one", playerOne.value);
+  });
 
+  const playerTwo = document.querySelector("#player-title-two");
+  playerTwo.addEventListener("input", ()=> {
+    game.changePlayerName("two", playerTwo.value);
+  });
+}
+
+
+
+(function game() {
+    const game = gameController('Shrut', 'Oksana');
+    const board = game.getBoard();
+    addPlayerListeners(game);
     console.log(board);
 
     const boardDiv = document.createElement("div");
     boardDiv.classList.add("board");
-    const body = document.querySelector("body");
+    const mainContainer = document.querySelector(".main-container");
 
     board.map((row, rowIndex) => {
         row.map((cell, cellIndex) => {
@@ -191,15 +227,19 @@ function playerCreater(name, playerValue, tokenValue) {
             cellDiv.classList.add("cell");
             cellDiv.dataset.row = rowIndex; 
             cellDiv.dataset.cell = cellIndex;
+            cellDiv.dataset.movedPlace = "false";
             cellDiv.addEventListener("click", ()=> {
               const currRow = event.target.dataset.row;
               const currCell = event.target.dataset.cell;
-              game.playRound(currRow, currCell);
+              if(event.target.dataset.movedPlace === "false") {
+                game.playRound(currRow, currCell);
+                event.target.dataset.movedPlace = "true";
+              }
             });
             boardDiv.appendChild(cellDiv);
         });
     });
-    body.appendChild(boardDiv);
+    mainContainer.insertBefore(boardDiv, document.querySelector(".restart"));
 
     // game.playRound(1, 1);
     // game.playRound(1, 0);

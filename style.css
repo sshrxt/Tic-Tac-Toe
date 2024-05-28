@@ -51,17 +51,27 @@ input:focus, select:focus {
     outline: none;
 }
 
-/* ------------------------------------------- basic skeleton ------------------------------------------------- */
+.main-container {
+    height: 100vh;
+    color: white;
+    width: 60vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ------------------------------------------- basic skeleton of board ------------------------------------------------- */
 body{
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100vh;
+    background-color: rgb(37, 37, 113);
+    background-image: url(sparkle-65.gif);
 }
 .board {
-    width: 50vw;
-    height: 50vh;
-    border: 2px solid red;
+    width: 40vw;
+    height: 68vh;
     font-size: 4rem;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -69,9 +79,98 @@ body{
     text-align: center;
 }
 .cell {
-    border: 2px solid black;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
 }
+
+/*---------------------------------------------board styling---------------------------------------------------------------*/
+.board{
+    background-color: aliceblue;
+    border: 1px dotted black;
+}
+
+.cell {
+    border-bottom: 1px dotted black;
+    border-right: 1px dotted black;
+    color: black;
+}
+
+.cell:hover{
+    background-color: rgb(199, 185, 243);
+}
+
+.board .cell:nth-child(3n) {
+    border-right: none;
+}
+
+.board .cell:nth-child(n+7) {
+    border-bottom: none;
+}
+
+/*-----------------------------------------main container styling-----------------------------------------------------------*/
+
+#title {
+    font-size: 4rem;
+    text-align: center;
+    margin: 20px 0px;
+    text-wrap: wrap;
+}
+
+#player-turn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 60%;
+    margin: 20px auto;
+}
+
+.player-turn-title {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.player-title {
+    font-size: 1.5rem;
+    border: none;
+    background: none;
+    outline: none;
+    width: 100px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+
+.pfp {
+    height: 70px;
+    width: 70px;
+    background-color: rgb(159, 159, 234);
+    border-radius: 50%;
+}
+
+.player-one, .player-two {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.restart{
+    font-size: 1.2rem;
+    padding: 1.4rem 1.1rem;
+    margin: 20px 0px;
+    background-color: rgb(159, 159, 234);
+    color: white;
+    border: none;
+    border-radius: 10px;
+}
+
+.restart:hover {
+    background-color: aliceblue;
+    color: black;
+    transform: scale(1.1);
+}
+
+
+

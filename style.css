@@ -147,6 +147,11 @@ body{
     width: 70px;
     background-color: rgb(159, 159, 234);
     border-radius: 50%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
 }
 
 .player-one, .player-two {

@@ -67,7 +67,7 @@ body{
     justify-content: center;
     height: 100vh;
     background-color: rgb(37, 37, 113);
-    background-image: url(sparkle-65.gif);
+    background-image: url(imgs/sparkle-65.gif);
 }
 .board {
     width: 40vw;
@@ -95,6 +95,8 @@ body{
     border-bottom: 1px dotted black;
     border-right: 1px dotted black;
     color: black;
+    font-family:   "Sedgwick Ave Display", "Lilita One";
+    font-size: 5.5rem;
 }
 
 .cell:hover{
@@ -116,6 +118,7 @@ body{
     text-align: center;
     margin: 20px 0px;
     text-wrap: wrap;
+    font-family: "Caveat Brush";
 }
 
 #player-turn {
@@ -123,12 +126,14 @@ body{
     justify-content: space-between;
     align-items: center;
     width: 60%;
-    margin: 20px auto;
+    margin: 14px auto;
 }
 
 .player-turn-title {
-    font-size: 2rem;
+    font-size: 2.5rem;
     margin-bottom: 10px;
+    font-family: "Caveat Brush";
+    text-align: center;
 }
 
 .player-title {
@@ -140,6 +145,7 @@ body{
     text-align: center;
     color: white;
     font-weight: bold;
+    font-family: "Edu TAS Beginner";
 }
 
 .pfp {
@@ -177,5 +183,30 @@ body{
     transform: scale(1.1);
 }
 
+/* Media query for smartphones */
+@media (max-width: 650px) {
+    body{
+        background-color: rgb(33, 18, 61);
+    }
+    .board{
+        width: 100%;
+    }
+    .main-container {
+        width: 80vw;
+    }
+    .player {
+        margin-bottom: 10px;
+    }
+    
+    #player-turn{
+        width: 80%;
+    }
+    .player-title {
+    
+        font-size: 1.1rem;
+    }
 
-
+    .player-turn-title {
+        font-size: 2.2rem;
+    }
+}
